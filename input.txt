@@ -1,0 +1,5 @@
+int soma = 20;
+
+para(int i = 0; i <= 9; i = i + 1){
+    int soma = 0;
+}
