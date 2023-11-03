@@ -1,4 +1,9 @@
-public class Tradutor extends atribuicaoBaseListener{
+import java.util.Dictionary;
+import java.util.Hashtable;
+
+public class Tradutor extends atribuicaoBaseListener {
+    Dictionary<String, String> variaveisDeclaradas = new Hashtable<>();
+
     public void enterInit(atribuicaoParser.InitContext ctx){
         System.out.println("public class Code{");
         System.out.println(" public static void main(String[] args){");
@@ -7,6 +12,26 @@ public class Tradutor extends atribuicaoBaseListener{
     public void exitInit(atribuicaoParser.InitContext ctx){
         System.out.print(" }\n");
         System.out.print("}\n");
+    }
+
+    public Boolean variavelJaDeclarada(String nome){
+        return this.variaveisDeclaradas.get(nome) != null;
+    }
+
+    public void declararVariavel(String nome, String tipo){
+        if(!variavelJaDeclarada(nome)){
+            this.variaveisDeclaradas.put(nome, tipo);
+        }
+    }
+
+    public void enterCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx){
+        if(ctx.var(0) == null) return;
+
+        if(variavelJaDeclarada(ctx.var(0).getText())){
+            throw new RuntimeException("ERRO DE DECLARACAO: Variável já declarada (" + ctx.var(0).getText() + ").");
+        } else {
+            declararVariavel(ctx.var(0).getText(), ctx.tipo().getText());
+        }
     }
 
     public void enterTipo(atribuicaoParser.TipoContext ctx){

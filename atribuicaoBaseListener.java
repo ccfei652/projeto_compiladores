@@ -64,6 +64,18 @@ public class atribuicaoBaseListener implements atribuicaoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCmdAtribuicao(atribuicaoParser.CmdAtribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdAtribuicao(atribuicaoParser.CmdAtribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCmdLer(atribuicaoParser.CmdLerContext ctx) { }
 	/**
 	 * {@inheritDoc}

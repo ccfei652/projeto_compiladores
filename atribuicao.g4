@@ -3,11 +3,13 @@ grammar atribuicao;
 // gramatica
 init: cmd+;
 
-cmd: cmdLer | cmdEscrever | cmdDeclara | cmdFor | cmdEnquanto | cmdSe | cmdExpressao;
+cmd: cmdLer | cmdEscrever | cmdDeclara | cmdAtribuicao | cmdFor | cmdEnquanto | cmdSe | cmdExpressao;
 
 cmdExpressao: expressao fim;
 
-cmdDeclara: (tipo var fim) | (tipo var operadorAtribuicao (var | num | ) fim);
+cmdDeclara: (tipo var fim) | (tipo var operadorAtribuicao (var | num | string | booleano) fim);
+
+cmdAtribuicao: var operadorAtribuicao ((var | num | string | booleano | ) | expressao)fim;
 
 cmdLer: 'leia' leftPar var rightPar fim;
 

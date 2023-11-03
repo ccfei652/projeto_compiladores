@@ -1,5 +1,5 @@
 int soma = 20;
+int i = 10;
+int j = 100;
 
-para(int i = 0; i <= 9; i = i + 1){
-    int soma = 0;
-}
+i = j + 10 / (20 - 3);

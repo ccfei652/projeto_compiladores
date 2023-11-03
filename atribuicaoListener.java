@@ -47,6 +47,16 @@ public interface atribuicaoListener extends ParseTreeListener {
 	 */
 	void exitCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link atribuicaoParser#cmdAtribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdAtribuicao(atribuicaoParser.CmdAtribuicaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link atribuicaoParser#cmdAtribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdAtribuicao(atribuicaoParser.CmdAtribuicaoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link atribuicaoParser#cmdLer}.
 	 * @param ctx the parse tree
 	 */
