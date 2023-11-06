@@ -2,7 +2,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class Tradutor extends atribuicaoBaseListener {
-    Dictionary<String, String> variaveisDeclaradas = new Hashtable<>();
+    Controller controller = new Controller();
 
     public void enterInit(atribuicaoParser.InitContext ctx){
         System.out.println("public class Code{");
@@ -14,23 +14,34 @@ public class Tradutor extends atribuicaoBaseListener {
         System.out.print("}\n");
     }
 
-    public Boolean variavelJaDeclarada(String nome){
-        return this.variaveisDeclaradas.get(nome) != null;
+    public void enterCmdExpressao(atribuicaoParser.CmdExpressaoContext ctx){
     }
 
-    public void declararVariavel(String nome, String tipo){
-        if(!variavelJaDeclarada(nome)){
-            this.variaveisDeclaradas.put(nome, tipo);
+
+    public void enterCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx){
+        if(ctx.var() == null) {
+            throw new RuntimeException("ERRO DE DECLARACAO: Nome da variável é obrigatório.");
+        };
+
+        if(controller.variavelJaDeclarada(ctx.var().getText())){
+            throw new RuntimeException("ERRO DE DECLARACAO: Variável já declarada (" + ctx.var().getText() + ").");
+        } else {
+            controller.declararVariavel(ctx.var().getText(), ctx.tipo().getText());
         }
     }
 
-    public void enterCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx){
-        if(ctx.var(0) == null) return;
-
-        if(variavelJaDeclarada(ctx.var(0).getText())){
-            throw new RuntimeException("ERRO DE DECLARACAO: Variável já declarada (" + ctx.var(0).getText() + ").");
+    public void enterCmdAtribuicao(atribuicaoParser.CmdAtribuicaoContext ctx){
+        if(ctx.tipo() != null){
+            if(controller.variavelJaDeclarada(ctx.var(0).getText())){
+                throw new RuntimeException("ERRO DE DECLARACAO: Variável já declarada (" + ctx.var(0).getText() + ").");
+            }
+            controller.checarTipoConteudo(ctx);
         } else {
-            declararVariavel(ctx.var(0).getText(), ctx.tipo().getText());
+            if(controller.variavelJaDeclarada(ctx.var(0).getText())){
+                controller.checarTipoConteudo(ctx);
+            } else {
+                throw new RuntimeException("ERRO DE DECLARACAO: Variável ainda não declarada (" + ctx.var(0).getText() + ").");
+            }
         }
     }
 

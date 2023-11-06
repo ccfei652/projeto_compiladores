@@ -1,5 +1,7 @@
-int soma = 20;
-int i = 10;
-int j = 100;
+int i;
 
-i = j + 10 / (20 - 3);
+int soma;
+
+soma = 10 + i;
+
+

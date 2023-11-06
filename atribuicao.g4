@@ -7,9 +7,9 @@ cmd: cmdLer | cmdEscrever | cmdDeclara | cmdAtribuicao | cmdFor | cmdEnquanto | 
 
 cmdExpressao: expressao fim;
 
-cmdDeclara: (tipo var fim) | (tipo var operadorAtribuicao (var | num | string | booleano) fim);
+cmdDeclara: (tipo var fim);
 
-cmdAtribuicao: var operadorAtribuicao ((var | num | string | booleano | ) | expressao)fim;
+cmdAtribuicao: tipo? var operadorAtribuicao ((var | num | string | booleano | ) | expressao)fim;
 
 cmdLer: 'leia' leftPar var rightPar fim;
 
@@ -47,7 +47,7 @@ mult: '*';
 div: '/';
 operadorMatematico: mais | menos | mult | div;
 
-tipo: 'booleano' | 'int' | 'flutuante';
+tipo: 'booleano' | 'int' | 'flutuante' | 'texto';
 
 booleano: booleanoTrue | booleanoFalse;
 booleanoTrue: 'true';
