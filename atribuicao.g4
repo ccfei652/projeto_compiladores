@@ -11,9 +11,9 @@ cmdDeclara: (tipo var fim);
 
 cmdAtribuicao: tipo? var operadorAtribuicao ((var | num | string | booleano | ) | expressao)fim;
 
-cmdLer: 'leia' leftPar var rightPar fim;
+cmdLer: 'leia(' var ');';
 
-cmdEscrever: 'escreva' leftPar (string | var) rightPar fim;
+cmdEscrever: 'escreva(' (string | var) ');';
 
 cmdSe: 'se' leftPar expressao operadorComparacao expressao rightPar leftChaves cmd+ rightChaves cmdSenaoSe* cmdSenao*;
 

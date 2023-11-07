@@ -1,12 +1,13 @@
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.Arrays;
 
 public class Tradutor extends atribuicaoBaseListener {
     Controller controller = new Controller();
 
     public void enterInit(atribuicaoParser.InitContext ctx){
+        System.out.println("import java.util.Scanner;");
         System.out.println("public class Code{");
         System.out.println(" public static void main(String[] args){");
+        System.out.println("      Scanner scanner = new Scanner(System.in);");
     }
 
     public void exitInit(atribuicaoParser.InitContext ctx){
@@ -14,9 +15,9 @@ public class Tradutor extends atribuicaoBaseListener {
         System.out.print("}\n");
     }
 
-    public void enterCmdExpressao(atribuicaoParser.CmdExpressaoContext ctx){
+    public void exitCmdLer(atribuicaoParser.CmdLerContext ctx){
+        controller.checarVariavelLeitura(ctx);
     }
-
 
     public void enterCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx){
         if(ctx.var() == null) {
@@ -56,6 +57,9 @@ public class Tradutor extends atribuicaoBaseListener {
                 break;
             case "booleano":
                 System.out.print("boolean ");
+                break;
+            case "texto":
+                System.out.print("String ");
                 break;
         }
     }

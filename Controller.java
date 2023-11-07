@@ -152,6 +152,32 @@ public class Controller {
                 }
                 break;
             }
+            case "texto": {
+                if(ctx.string() != null){
+                    if(isConteudoTexto(ctx.string().getText())){
+                        if(!varJaDeclarada) declararVariavel(varDeclarada, tipo);
+                    } else {
+                        throw new RuntimeException("ERRO DE DECLARACAO: O tipo " + tipo + " é incompatível com o tipo booleano");
+                    }
+                } else if (ctx.var(1) != null){
+                    String varAtribuida = ctx.var(1).getText();
+
+                    if(variavelJaDeclarada(varAtribuida)){
+                        String tipoVariavel = this.variaveisDeclaradas.get(varAtribuida);
+
+                        if(tipoVariavel.equals(tipo)){
+                            if(!varJaDeclarada) declararVariavel(varDeclarada, tipo);
+                        } else {
+                            throw new RuntimeException("ERRO DE DECLARACAO: A variavel " + varAtribuida + " é incompatível com o tipo " + tipo);
+                        }
+                    } else {
+                        throw new RuntimeException("ERRO DE DECLARACAO: Variável " + varAtribuida + " não declarada");
+                    }
+                } else {
+                    throw new RuntimeException("ERRO DE DECLARACAO: O tipo " + tipo + " é incompatível com sua atribuição para a variável " + varDeclarada);
+                }
+                break;
+            }
         }
     }
 
@@ -169,4 +195,40 @@ public class Controller {
         Matcher matcher = pattern.matcher(conteudo);
         return matcher.matches();
     }
+
+    public boolean isConteudoTexto(String conteudo){
+        boolean somenteDuasAspas = conteudo.chars().filter(caracter -> caracter == '"').count() == 2;
+        return conteudo.startsWith("\"") && conteudo.endsWith("\"") && somenteDuasAspas;
+    }
+
+    public void checarVariavelLeitura(atribuicaoParser.CmdLerContext ctx){
+        if(ctx.var() == null){
+            throw new RuntimeException("ERRO DE LEITURA: A variável não foi inserida");
+        }
+
+        String variavelParaLer = ctx.var().getText();
+
+        if(variavelJaDeclarada(variavelParaLer)){
+            String tipoVariavelParaLer = this.variaveisDeclaradas.get(variavelParaLer);
+            switch (tipoVariavelParaLer) {
+                case "int":
+                    System.out.println(" = scanner.nextInt();");
+                    break;
+                case "flutuante":
+                    System.out.println( " = scanner.nextDouble();");
+                    break;
+                case "texto":
+                    System.out.println(" = scanner.nextLine();");
+                    break;
+                case "booleano":
+                    System.out.println(" = scanner.nextBoolean();");
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            throw new RuntimeException("ERRO DE LEITURA: A variável " + variavelParaLer + " ainda não foi declarada.");
+        }
+    }
+
 }

@@ -1,7 +1,5 @@
-int i;
+booleano j;
 
-int soma;
+j = 10 + 20;
 
-soma = 10 + i;
-
-
+leia(j);
