@@ -9,7 +9,7 @@ cmdExpressao: expressao fim;
 
 cmdDeclara: (tipo var fim);
 
-cmdAtribuicao: tipo? var operadorAtribuicao ((var | num | string | booleano | ) | expressao)fim;
+cmdAtribuicao: tipo? var operadorAtribuicao ((var | num | string | booleano | ) | expressao) fim;
 
 cmdLer: 'leia(' var ');';
 
@@ -25,13 +25,13 @@ cmdFor: 'para' leftPar inicializaFor testeFor atualizaFor rightPar leftChaves cm
 
 cmdEnquanto: 'enquanto' leftPar ((expressao operadorComparacao expressao) | booleano) rightPar leftChaves cmd+ rightChaves;
 
-inicializaFor: tipo? var operadorAtribuicao num fim;
-testeFor: var operadorComparacao num fim;
+inicializaFor: cmdAtribuicao;
+testeFor: expressao operadorComparacao expressao fim;
 atualizaFor: var operadorAtribuicao expressao;
 
 expressao: expressao mais termo | expressao menos termo | termo;
 termo: termo mult fator | termo div fator | fator;
-fator: num | var | leftPar expressao rightPar;
+fator: num | var | booleano | string | leftPar expressao rightPar;
 
 operadorAtribuicao: '=';
 operadorComparacao: '>' | '>=' | '<' | '<=' |  '!=' | '==';

@@ -19,6 +19,14 @@ public class Tradutor extends atribuicaoBaseListener {
         controller.checarVariavelLeitura(ctx);
     }
 
+    public void enterCmdEscrever(atribuicaoParser.CmdEscreverContext ctx){
+        controller.checarVariavelEscrita(ctx);
+    }
+
+    public void exitCmdEscrever(atribuicaoParser.CmdEscreverContext ctx){
+        System.out.println(");");
+    }
+
     public void enterCmdDeclara(atribuicaoParser.CmdDeclaraContext ctx){
         if(ctx.var() == null) {
             throw new RuntimeException("ERRO DE DECLARACAO: Nome da variável é obrigatório.");
@@ -44,6 +52,28 @@ public class Tradutor extends atribuicaoBaseListener {
                 throw new RuntimeException("ERRO DE DECLARACAO: Variável ainda não declarada (" + ctx.var(0).getText() + ").");
             }
         }
+    }
+
+    public void enterCmdSe(atribuicaoParser.CmdSeContext ctx){
+        controller.checarExpressoesSe(ctx);
+        System.out.print("if");
+    }
+
+    public void enterCmdSenaoSe(atribuicaoParser.CmdSenaoSeContext ctx){
+        controller.checarExpressoesSenaoSe(ctx);
+        System.out.print("else if");
+    }
+
+    public void enterCmdSenao(atribuicaoParser.CmdSenaoContext ctx){
+        System.out.print("else");
+    }
+
+    public void enterCmdFor(atribuicaoParser.CmdForContext ctx){
+        System.out.print("for");
+    }
+
+    public void exitCmdFor(atribuicaoParser.CmdForContext ctx){
+        controller.checarCicloFor(ctx);
     }
 
     public void enterTipo(atribuicaoParser.TipoContext ctx){
@@ -147,12 +177,12 @@ public class Tradutor extends atribuicaoBaseListener {
         System.out.print(")");
     }
 
-    public void enterLeftChave(atribuicaoParser.LeftChavesContext ctx) {
+    public void enterLeftChaves(atribuicaoParser.LeftChavesContext ctx) {
         System.out.print("{\n");
     }
 
-    public void enterRightChave(atribuicaoParser.RightChavesContext ctx) {
-        System.out.print("}");
+    public void enterRightChaves(atribuicaoParser.RightChavesContext ctx) {
+        System.out.print("}\n");
     }
 
     public void exitFim(atribuicaoParser.FimContext ctx){

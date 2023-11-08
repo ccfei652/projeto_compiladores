@@ -92,11 +92,6 @@ public class atribuicaoLexer extends Lexer {
 	}
 
 
-	  public void reportError(RecognitionException e) {
-	    throw new RuntimeException("I quit!\n" + e.getMessage());
-	  }
-
-
 	public atribuicaoLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
