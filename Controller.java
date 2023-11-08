@@ -208,12 +208,17 @@ public class Controller {
         return conteudo.startsWith("\"") && conteudo.endsWith("\"") && somenteDuasAspas;
     }
 
-    public void checarVariavelLeitura(atribuicaoParser.CmdLerContext ctx){
+    public void checarVariavelLeitura(atribuicaoParser.CmdLerContext ctx, Boolean isJavascript){
         if(ctx.var() == null){
             throw new RuntimeException("ERRO DE LEITURA: A variável não foi inserida");
         }
 
         String variavelParaLer = ctx.var().getText();
+
+        if(isJavascript){
+            System.out.println(" = prompt();");
+            return;
+        }
 
         if(variavelJaDeclarada(variavelParaLer)){
             String tipoVariavelParaLer = this.variaveisDeclaradas.get(variavelParaLer);
@@ -245,8 +250,6 @@ public class Controller {
                 throw new RuntimeException("ERRO DE ESCRITA: A variável " + variavelParaEscrever + " ainda não foi declarada.");
             }
         }
-
-        System.out.print("System.out.println(");
     }
 
     public void checarExpressoesSe(atribuicaoParser.CmdSeContext ctx){

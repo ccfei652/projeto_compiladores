@@ -1,6 +1,6 @@
-int j = 0;
+texto j = "qualquer coisa";
 
-enquanto(j< 10){
+enquanto(j< 10.2){
     j = j + 1;
-    escreva("J 1");
+    escreva("Qualquer coisa menos operadores matematicos 1");
 }

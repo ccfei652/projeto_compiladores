@@ -27,7 +27,7 @@ public class Compilador {
         ParseTree tree = parser.init();
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        walker.walk(new Tradutor(), tree);
+        walker.walk(new TradutorJavaScript(), tree);
         System.out.println("");
     }
 }

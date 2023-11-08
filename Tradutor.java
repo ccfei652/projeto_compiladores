@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Tradutor extends atribuicaoBaseListener {
     Controller controller = new Controller();
 
@@ -16,11 +14,12 @@ public class Tradutor extends atribuicaoBaseListener {
     }
 
     public void exitCmdLer(atribuicaoParser.CmdLerContext ctx){
-        controller.checarVariavelLeitura(ctx);
+        controller.checarVariavelLeitura(ctx, false);
     }
 
     public void enterCmdEscrever(atribuicaoParser.CmdEscreverContext ctx){
         controller.checarVariavelEscrita(ctx);
+        System.out.println("   System.out.println(");
     }
 
     public void exitCmdEscrever(atribuicaoParser.CmdEscreverContext ctx){
