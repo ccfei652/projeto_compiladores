@@ -357,37 +357,40 @@ public class Controller {
         return tiposExpressao;
     }
 
-    public void checarCicloFor(atribuicaoParser.CmdForContext ctx){
+    public void checarInicializaFor(atribuicaoParser.InicializaForContext ctx){
         // InicializaFor
-        checarTipoConteudo(ctx.inicializaFor().cmdAtribuicao());
+        checarTipoConteudo(ctx.cmdAtribuicao());
+    }
+
+    public void checarTesteFor(atribuicaoParser.TesteForContext ctx){
         // TesteFor
-        String[] conteudoPrimeiraExpressao = ctx.testeFor().expressao(0).getText().split("[-+*/()\\s]");
-        String[] conteudoSegundaExpressao = ctx.testeFor().expressao(1).getText().split("[-+*/()\\s]");
-        String comparadorTeste = ctx.testeFor().operadorComparacao().getText();
+        String[] conteudoPrimeiraExpressao = ctx.expressao(0).getText().split("[-+*/()\\s]");
+        String[] conteudoSegundaExpressao = ctx.expressao(1).getText().split("[-+*/()\\s]");
+        String comparadorTeste = ctx.operadorComparacao().getText();
 
         checarExpressoes(conteudoPrimeiraExpressao, conteudoSegundaExpressao, comparadorTeste);
-        // AtualizaFor
-        atribuicaoParser.AtualizaForContext atualizaForContext = ctx.atualizaFor();
+    }
 
-        if(atualizaForContext.var() == null){
+    public void checarAtualizaFor(atribuicaoParser.AtualizaForContext ctx){
+        if(ctx.var() == null){
             throw new RuntimeException("ERRO: É esperado variável de atualização do ciclo");
         }
 
-        String variavelAtualiza = atualizaForContext.var().getText();
+        String variavelAtualiza = ctx.var().getText();
 
         if(!variavelJaDeclarada(variavelAtualiza)){
             throw new RuntimeException("ERRO: Variável não declarada para atualização do ciclo");
         }
 
-        String[] expressaoAtualiza = atualizaForContext.expressao().getText().split("[-+*/()\\s]");
+        String[] expressaoAtualiza = ctx.expressao().getText().split("[-+*/()\\s]");
         ArrayList<String> tipoExpressaoAtualiza = checarTipoExpressao(expressaoAtualiza);
 
-        String tipoVariavel = this.variaveisDeclaradas.get(atualizaForContext.var().getText());
+        String tipoVariavel = this.variaveisDeclaradas.get(ctx.var().getText());
 
         if(tipoExpressaoAtualiza.size() > 1){
             tipoExpressaoAtualiza.remove(tipoVariavel);
             throw new RuntimeException("ERRO: Tipo declarado para " + variavelAtualiza + ":  " + tipoVariavel +
-                                        " - Tipo Atribuido: " + tipoExpressaoAtualiza.get(0));
+                    " - Tipo Atribuido: " + tipoExpressaoAtualiza.get(0));
         }
 
         if(!tipoVariavel.equals(tipoExpressaoAtualiza.get(0)) ){

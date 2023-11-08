@@ -72,8 +72,16 @@ public class Tradutor extends atribuicaoBaseListener {
         System.out.print("for");
     }
 
-    public void exitCmdFor(atribuicaoParser.CmdForContext ctx){
-        controller.checarCicloFor(ctx);
+    public void exitInicializaFor(atribuicaoParser.InicializaForContext ctx){
+        controller.checarInicializaFor(ctx);
+    }
+
+    public void exitTesteFor(atribuicaoParser.TesteForContext ctx){
+        controller.checarTesteFor(ctx);
+    }
+
+    public void exitAtualizaFor(atribuicaoParser.AtualizaForContext ctx){
+        controller.checarAtualizaFor(ctx);
     }
 
     public void enterTipo(atribuicaoParser.TipoContext ctx){
