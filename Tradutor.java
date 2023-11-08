@@ -84,6 +84,11 @@ public class Tradutor extends atribuicaoBaseListener {
         controller.checarAtualizaFor(ctx);
     }
 
+    public void enterCmdEnquanto(atribuicaoParser.CmdEnquantoContext ctx){
+        controller.checarEnquanto(ctx);
+        System.out.print("while");
+    }
+
     public void enterTipo(atribuicaoParser.TipoContext ctx){
         String tipo = ctx.getText();
         switch(tipo){

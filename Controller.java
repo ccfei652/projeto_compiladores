@@ -397,4 +397,18 @@ public class Controller {
             throw new RuntimeException("ERRO: Tipo declarado para " + variavelAtualiza + ":  " + tipoVariavel + " - Tipo Atribuido: " + tipoExpressaoAtualiza);
         }
     }
+
+    public void checarEnquanto(atribuicaoParser.CmdEnquantoContext ctx){
+        if(ctx.booleano() != null){
+            if(!isConteudoBooleano(ctx.booleano().getText())){
+                throw new RuntimeException("ERRO: " + ctx.booleano().getText() + " é incompatível com o tipo booleano");
+            }
+        } else {
+            String[] conteudoPrimeiraExpressao = ctx.expressao(0).getText().split("[-+*/()\\s]");
+            String[] conteudoSegundaExpressao = ctx.expressao(1).getText().split("[-+*/()\\s]");
+            String comparadorTeste = ctx.operadorComparacao().getText();
+
+            checarExpressoes(conteudoPrimeiraExpressao, conteudoSegundaExpressao, comparadorTeste);
+        }
+    }
 }

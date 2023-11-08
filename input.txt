@@ -1,5 +1,6 @@
 int j = 0;
 
-para(int i = 0; i < 10; i = i + 1.0){
+enquanto(j< 10){
     j = j + 1;
+    escreva("J 1");
 }
